@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Index Page</title>
+</head>
+<body>
+	<h1 id='app'>{{ text }}</h1>
+    
+</body>
+
+<script type="text/javascript">
+	var socket = new WebSocket('ws://localhost:8000/ws/test_url/12/45/');
+
+	socket.onclose = function close() {
+    	socket.close();
+    	//console.log('WebSocket connection closed');
+    }
+
+	socket.onmessage = function(event){
+		var data = JSON.parse(event.data);
+		console.log(data);
+		document.getElementById("app").innerHTML = data.message;
+		if (socket.readyState == WebSocket.OPEN) {
+	      socket.onclose();
+	    }
+	}
+
+	/*socket.onopen = function open() {
+      console.log('WebSockets connection created.');
+    };*/
+
+	/*if (socket.readyState == WebSocket.OPEN) {
+      socket.onopen();
+    }*/
+</script>
+
+</html>

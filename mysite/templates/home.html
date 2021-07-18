@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home Page</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<body>
+	<h1 id='app2'>{{ text }}</h1>
+	<select id="select_box">
+		<option value="12">Index Page</option>
+		<option value="11">Second Page</option>
+	</select>
+    <button id="submit">submit</button>
+</body>
+
+</html>
+<script type="text/javascript">
+	$()
+	$("#submit").click(function(event){
+		id = $("#select_box").val();
+		$.ajax({
+			url : 'test',
+			type : 'GET',
+			data : {'id' : id},
+			dataType:'json',
+			success : function(data) {
+				console.log('success')
+			},
+			error : function(request,error){
+				console.log('failed')
+			}
+		});
+	})
+</script>
