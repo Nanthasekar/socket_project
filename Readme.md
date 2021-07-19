@@ -23,33 +23,32 @@
     from channels.consumer import AsyncConsumer
 
     class WSConsumer(AsyncJsonWebsocketConsumer):
-		async def connect(self):
-			self.room_name = “test socket”
-			self.room_group_name = 'chat_%s' % self.room_name
-			await(self.channel_layer.group_add)(
-				self.room_group_name,
-				self.channel_name,
-			)
-			await self.accept()
-			await self.send(json.dumps({'message':"this message generate through socket"}))
-	
+        async def connect(self):
+            self.room_name = “test socket”
+            self.room_group_name = 'chat_%s' % self.room_name
+            await(self.channel_layer.group_add)(
+                self.room_group_name,
+                self.channel_name,
+            )
+            await self.accept()
+            await self.send(json.dumps({'message':"this message generate through socket"}))
 
-		async def receiver(self, text_data=""):
-			await self.send(json.dumps({'message':"this message receive through socket"}))
-			await self.close()
+        async def receiver(self, text_data=""):
+            await self.send(json.dumps({'message':"this message receive through socket"}))
+            await self.close()
 
-		async def disconnect(self, close_code):
-			print('connection closed')
-        
+        async def disconnect(self, close_code):
+            print('connection closed')
+
         async def send_notification(self, event):
-			data = json.loads(event.get('value', ''))
-			await self.send(text_data=json.dumps({'message':data}))
-			print("send_notification")
+            data = json.loads(event.get('value', ''))
+            await self.send(text_data=json.dumps({'message':data}))
+            print("send_notification")
 
-		async def send_text(self, event):
-			data = event.get('value', '')
-			await self.send(text_data=json.dumps({'message':data}))
-			await self.close()
+        async def send_text(self, event):
+            data = event.get('value', '')
+            await self.send(text_data=json.dumps({'message':data}))
+            await self.close()
             
 ### URL Rounting file
 
